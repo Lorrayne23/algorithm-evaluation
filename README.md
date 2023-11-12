@@ -1,3 +1,4 @@
+<div align="justify">
 # Algorithm Evaluation
 A distribution and logistics company has a fleet made up of N trucks. Weekly,
 this company organizes its deliveries into M routes, which must be distributed among trucks
@@ -40,6 +41,8 @@ b1) For this test, use the same sets of size T used in backtracking. In then inc
 ### c) Design and implement a solution to the problem presented using divide and conquer. 
 
 c1) In this case, use the same sets of size T used in backtracking.
+
+</div>
 
 ### d) Design and implement a solution to the problem presented using programming dynamics. 
 
