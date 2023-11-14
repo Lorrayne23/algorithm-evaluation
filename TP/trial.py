@@ -1,4 +1,4 @@
-class Backtracking:
+class Trial:
     def __init__(self, rotas, num_caminhoes):
         self.rotas = rotas
         self.num_caminhoes = num_caminhoes
@@ -50,7 +50,7 @@ class Backtracking:
             print(f"Caminhão {i}: {rotas_formatadas} – Total {total_kms}km")
 
 # Exemplo de uso
-rotas_exemplo = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
+'''rotas_exemplo = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
 num_caminhoes_exemplo = 3
 
 distribuicao = Backtracking(rotas_exemplo, num_caminhoes_exemplo)
@@ -58,4 +58,4 @@ distribuicao.resolver()
 melhor_distribuicao = distribuicao.obter_melhor_distribuicao()
 distribuicao.imprimir_melhor_distribuicao()
 
-print("Melhor distribuição:", melhor_distribuicao)
+print("Melhor distribuição:", melhor_distribuicao)'''

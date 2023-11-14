@@ -1,15 +1,26 @@
-from Backtracking import Backtracking
+from Backtracking import Backtrack
+from GeradorDeProblemas import GeradorDeProblemas
 
 
-rotas_exemplo = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
-num_caminhoes_exemplo = 4
 
-bactrack = Backtracking(rotas_exemplo, num_caminhoes_exemplo)
-bactrack.resolver()
-melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
-bactrack.imprimir_melhor_distribuicao()
+quant_rotas = 5
+tam_conjunto = 3
+dispersao = 0.7
 
-print("Melhor distribuição:", melhor_distribuicao_backtrack)
+result = GeradorDeProblemas.geracao_de_rotas(quant_rotas,tam_conjunto,dispersao)
+print(result)
+
+for conjunto in result:
+    print(" Backtrack")
+    rotas_exemplo = conjunto
+    num_caminhoes_exemplo = 4
+    bactrack = Backtrack(rotas_exemplo, num_caminhoes_exemplo)
+    bactrack.resolver()
+    melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
+    bactrack.imprimir_melhor_distribuicao()
+    print("Melhor distribuição:", melhor_distribuicao_backtrack)
+
+
 
 '''
 a1) Utilizando o código do ‘gerador de problemas’ fornecido, medir o tempo de execução de
