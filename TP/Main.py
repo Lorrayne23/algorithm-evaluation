@@ -1,62 +1,53 @@
 import time
-from Backtracking import Backtrack
+import signal
+from Backtracking import  Backtrack
 from GeradorDeProblemas import GeradorDeProblemas
 
-inicio = time.time()
-checa_tempo = 0
-quant_rotas = 6
-tam_conjunto = 3
-dispersao = 0.7
+class ExecucaoAlgoritmos:
+    def __init__(self):
+        self.tempoDeExecucaoConjunto = []
+        self.numCaminhoes = 3
+        self.tamanho_conjunto = 10
+        self.dispersao = 0.7
+        self.tempo_maximo = 30
 
-while checa_tempo <= 5:
+    def executar_backtracking(self):
+        def handler(signum, frame):
+            raise TimeoutError("Tempo máximo de execução atingido")
 
-    for _ in range(10):
-        result = GeradorDeProblemas.geracao_de_rotas(quant_rotas, tam_conjunto, dispersao)
-        'Backtracking'
-    tam_conjunto = + 1
-    quant_rotas = quant_rotas + 1
-    fim = time.time()
-    checa_tempo = (fim - inicio)
+        signal.signal(signal.SIGALRM, handler)
+        signal.alarm(self.tempo_maximo)
 
+        try:
+            quant_rotas = 6
+            while True:
+                print('-------------------')
+                print('Quantidade de rotas :', quant_rotas)
+                conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quant_rotas, self.tamanho_conjunto,self.dispersao)
+                print('-----------------------')
+                print('Conjunto de teste gerado:')
+                print(conjunto_teste)
+                inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+                for conjunto in conjunto_teste:
+                    print('------------------------')
+                    print('Conjunto em execução :')
+                    print(conjunto)
+                    bactrack = Backtrack(conjunto, self.numCaminhoes)
+                    bactrack.resolver()
+                    melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
+                    bactrack.imprimir_melhor_distribuicao()
+                    print(melhor_distribuicao_backtrack)
+                fim = time.time()  # Tempo final de execução de cada tamanho
+                tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+                self.tempoDeExecucaoConjunto.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+                quant_rotas += 1  # Incrementa a quantidade de rotas
 
+        except TimeoutError as te:
+            print(te)
 
+        finally:
+            signal.alarm(0)  # Reset do temporizador após a conclusão ou exceção
 
-
-
-'''inicio = time.time()
-checa_tempo = 0
-
-while checa_tempo <= 5:
-    for conjunto in result:
-        rotas_exemplo = conjunto
-        num_caminhoes_exemplo = 4
-        bactrack = Backtrack(rotas_exemplo, num_caminhoes_exemplo)
-        bactrack.resolver()
-        melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
-        #bactrack.imprimir_melhor_distribuicao()
-        print("Melhor distribuição:", melhor_distribuicao_backtrack)
-        fim = time.time()
-        checa_tempo = (fim -inicio)
-        #print(checa_tempo)'''
-
-
-
-
-'''
-a1) Utilizando o código do ‘gerador de problemas’ fornecido, medir o tempo de execução de
-conjuntos de tamanho crescente, até atingir um tamanho T que não consiga ser resolvido em até
-30 segundos pelo algoritmo. Este teste deve ser realizado para 3 caminhões e começando com 6
-rotas. Na busca do tempo limite de 30 segundos, faça o teste com 10 conjuntos de cada tamanho,
-contabilizando a média das execuções
-
-Tempo limite de 30 segundos 
-Número de caminhões fixo = 3
-Início de quant_rotas = 6 
-Faça o teste com 10 conjuntos de cada tamanho,contabilizando a média das execuções :
-( o tamanho do conjunto de testes (ou seja, quantos conjuntos de rotas daquele
-tamanho serão gerados) 
-Ex : tamanho do conjunto 2, executa 10 vezes
-    tamanho do conjunto 3, executa 10 vezes 
-    tamanho do conjunto 4, executa 10 vezes
-
-'''
+if __name__ == "__main__":
+    execucao = ExecucaoAlgoritmos()
+    execucao.executar_backtracking()
