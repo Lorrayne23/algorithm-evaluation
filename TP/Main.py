@@ -5,11 +5,29 @@ from GeradorDeProblemas import GeradorDeProblemas
 
 class ExecucaoAlgoritmos:
     def __init__(self):
-        self.tempoDeExecucaoConjunto = []
+        self.tempoDeExecucaoConjuntoBacktracking = []
         self.numCaminhoes = 3
         self.tamanho_conjunto = 10
         self.dispersao = 0.7
         self.tempo_maximo = 30
+
+
+    def backtrack(self,conjunto_teste):
+        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+        for conjunto in conjunto_teste:
+            print('------------------------')
+            print('Conjunto em execução :')
+            print(conjunto)
+
+            bactrack = Backtrack(conjunto, self.numCaminhoes)
+            bactrack.resolver()
+            melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
+            bactrack.imprimir_melhor_distribuicao()
+            print(melhor_distribuicao_backtrack)
+        fim = time.time()  # Tempo final de execução de cada tamanho
+        tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+        self.tempoDeExecucaoConjuntoBacktracking.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+
 
     def executar_backtracking(self):
         def handler(signum, frame):
@@ -27,19 +45,7 @@ class ExecucaoAlgoritmos:
                 print('-----------------------')
                 print('Conjunto de teste gerado:')
                 print(conjunto_teste)
-                inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
-                for conjunto in conjunto_teste:
-                    print('------------------------')
-                    print('Conjunto em execução :')
-                    print(conjunto)
-                    bactrack = Backtrack(conjunto, self.numCaminhoes)
-                    bactrack.resolver()
-                    melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
-                    bactrack.imprimir_melhor_distribuicao()
-                    print(melhor_distribuicao_backtrack)
-                fim = time.time()  # Tempo final de execução de cada tamanho
-                tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
-                self.tempoDeExecucaoConjunto.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+                self.backtrack(conjunto_teste)
                 quant_rotas += 1  # Incrementa a quantidade de rotas
 
         except TimeoutError as te:
