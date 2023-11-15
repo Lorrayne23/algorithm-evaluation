@@ -2,29 +2,42 @@ import time
 from Backtracking import Backtrack
 from GeradorDeProblemas import GeradorDeProblemas
 
-quant_rotas = 5
+inicio = time.time()
+checa_tempo = 0
+quant_rotas = 6
 tam_conjunto = 3
 dispersao = 0.7
 
-result = GeradorDeProblemas.geracao_de_rotas(quant_rotas,tam_conjunto,dispersao)
-print(result)
+while checa_tempo <= 5:
 
-inicio = time.time()
+    for _ in range(10):
+        result = GeradorDeProblemas.geracao_de_rotas(quant_rotas, tam_conjunto, dispersao)
+        'Backtracking'
+    tam_conjunto = + 1
+    quant_rotas = quant_rotas + 1
+    fim = time.time()
+    checa_tempo = (fim - inicio)
+
+
+
+
+
+
+'''inicio = time.time()
 checa_tempo = 0
 
-while checa_tempo <= 30:
+while checa_tempo <= 5:
     for conjunto in result:
-        print(" Backtrack")
         rotas_exemplo = conjunto
         num_caminhoes_exemplo = 4
         bactrack = Backtrack(rotas_exemplo, num_caminhoes_exemplo)
         bactrack.resolver()
         melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
-        bactrack.imprimir_melhor_distribuicao()
+        #bactrack.imprimir_melhor_distribuicao()
         print("Melhor distribuição:", melhor_distribuicao_backtrack)
         fim = time.time()
         checa_tempo = (fim -inicio)
-        print(checa_tempo)
+        #print(checa_tempo)'''
 
 
 
