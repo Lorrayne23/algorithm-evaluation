@@ -1,61 +1,56 @@
-class Trial:
+class MergeSort:
     def __init__(self, rotas, num_caminhoes):
         self.rotas = rotas
         self.num_caminhoes = num_caminhoes
-        self.melhor_solucao = None
-        self.melhor_diferenca = float('inf')
+        self.distribuicao = [[] for _ in range(num_caminhoes)]
+        self.total_quilometragem = [0] * num_caminhoes
 
-    def resolver(self):
-        def backtrack(sol_parcial, idx_rota):
-            # Verifica se é uma solução completa
-            if idx_rota == len(self.rotas):
-                # Avalia a solução e atualiza a melhor solução se necessário
-                quilometragens = [sum(cam) for cam in sol_parcial]
-                diferenca = max(quilometragens) - min(quilometragens)
+    def merge_sort(self, arr):
+        if len(arr) > 1:
+            meio = len(arr) // 2
+            metade_esquerda = arr[:meio]
+            metade_direita = arr[meio:]
 
-                if diferenca < self.melhor_diferenca:
-                    self.melhor_diferenca = diferenca
-                    self.melhor_solucao = [cam.copy() for cam in sol_parcial]
-                return
+            self.merge_sort(metade_esquerda)
+            self.merge_sort(metade_direita)
 
-            # Poda: Se a solução parcial atual não for promissora
-            if not self.poda(sol_parcial, idx_rota):
-                return
+            i = j = k = 0
 
-            # Exploração recursiva das decisões possíveis
-            for i in range(self.num_caminhoes):
-                sol_parcial[i].append(self.rotas[idx_rota])
-                backtrack(sol_parcial, idx_rota + 1)
-                sol_parcial[i].pop()  # Desfaz a decisão
+            while i < len(metade_esquerda) and j < len(metade_direita):
+                if metade_esquerda[i] < metade_direita[j]:
+                    arr[k] = metade_esquerda[i]
+                    i += 1
+                else:
+                    arr[k] = metade_direita[j]
+                    j += 1
+                k += 1
 
-        # Inicializa as soluções parciais
-        solucao_parcial = [[] for _ in range(self.num_caminhoes)]
+            while i < len(metade_esquerda):
+                arr[k] = metade_esquerda[i]
+                i += 1
+                k += 1
 
-        # Inicia o backtracking
-        backtrack(solucao_parcial, 0)
+            while j < len(metade_direita):
+                arr[k] = metade_direita[j]
+                j += 1
+                k += 1
 
-    def poda(self, sol_parcial, idx_rota):
-        # Verifica se a solução parcial atual é promissora
-        quilometragens_atual = [sum(cam) for cam in sol_parcial]
-        diferenca_atual = max(quilometragens_atual) - min(quilometragens_atual)
-        return diferenca_atual <= self.melhor_diferenca
+    def distribuir_quilometragem(self):
+        self.merge_sort(self.rotas)
+        for rota in self.rotas:
+            caminhao_idx = self.total_quilometragem.index(min(self.total_quilometragem))
+            self.distribuicao[caminhao_idx].append(rota)
+            self.total_quilometragem[caminhao_idx] += rota
 
-    def obter_melhor_distribuicao(self):
-        return self.melhor_solucao
+    def imprimir_distribuicao(self):
+        for i, caminhao_rotas in enumerate(self.distribuicao):
+            print(f'Caminhão {i + 1}: rotas {caminhao_rotas} - total {self.total_quilometragem[i]}km')
 
-    def imprimir_melhor_distribuicao(self):
-        for i, caminhao in enumerate(self.melhor_solucao, start=1):
-            total_kms = sum(caminhao)
-            rotas_formatadas = ", ".join([f"rota {rota}" for rota in caminhao])
-            print(f"Caminhão {i}: {rotas_formatadas} – Total {total_kms}km")
 
 # Exemplo de uso
-'''rotas_exemplo = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
-num_caminhoes_exemplo = 3
+rotas = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
+num_caminhoes = 3
 
-distribuicao = Backtracking(rotas_exemplo, num_caminhoes_exemplo)
-distribuicao.resolver()
-melhor_distribuicao = distribuicao.obter_melhor_distribuicao()
-distribuicao.imprimir_melhor_distribuicao()
-
-print("Melhor distribuição:", melhor_distribuicao)'''
+distribuicao_caminhoes = MergeSort(rotas, num_caminhoes)
+distribuicao_caminhoes.distribuir_quilometragem()
+distribuicao_caminhoes.imprimir_distribuicao()

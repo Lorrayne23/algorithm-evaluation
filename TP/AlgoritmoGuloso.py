@@ -16,7 +16,7 @@ class Greedy:
             self.distribuicao_rotas_menor[caminhao_atual].append((index, rota))
 
     def distribuir_rotas_agrupamento(self):
-        # Estratégia: Priorizando rotas próximas fisicamente para minimizar a quilometragem total percorrida.
+        # Estratégia: Prioriza rotas próximas fisicamente para minimizar a quilometragem total percorrida.
         # As rotas são ordenadas por quilometragem, e cada rota é atribuída ao caminhão que minimiza a alteração na quilometragem acumulada,
         # considerando também o número de rotas já atribuídas.
         rotas_ordenadas = sorted(enumerate(self.rotas), key=lambda x: x[1], reverse=True)
@@ -42,8 +42,8 @@ class Greedy:
 
 
 # Exemplo de uso
-caminhoes = 3
-rotas = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
+'''caminhoes = 3
+rotas = [35, 34, 33, 23, 21, 32]
 
 # Cria uma nova instância da classe e realiza a distribuição usando a estratégia de menor quilometragem primeiro
 distribuicao_menor = Greedy(caminhoes, rotas)
@@ -59,4 +59,4 @@ distribuicao_agrupamento.distribuir_rotas_agrupamento()
 
 # Exibe o resultado da distribuição usando a estratégia de agrupamento
 print("\nDistribuição usando a estratégia de agrupamento:")
-distribuicao_agrupamento.exibir_distribuicao('agrupamento')
+distribuicao_agrupamento.exibir_distribuicao('agrupamento')'''

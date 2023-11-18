@@ -16,64 +16,68 @@ class ExecucaoAlgoritmos:
         self.dispersao = 0.7
         self.tempo_maximo = 30
 
-    def backtrack(self,conjunto_teste):
-        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
-        for conjunto in conjunto_teste:
-            print('------------------------')
-            print('Conjunto em execução :')
-            print(conjunto)
 
-            bactrack = Backtrack(conjunto, self.numCaminhoes)
-            bactrack.resolver()
-            melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
-            bactrack.imprimir_melhor_distribuicao()
-            print(melhor_distribuicao_backtrack)
-        fim = time.time()  # Tempo final de execução de cada tamanho
-        tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
-        self.tempoDeExecucaoConjuntoBacktracking.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+    def execusaoGulosoEstrategia1(self,quantRotas):
+        totalRotasExecusao = quantRotas * 10
 
-    def gulosoEstrategia1(self,conjunto_teste):
-        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
-        for conjunto in conjunto_teste:
-            print('------------------------')
-            print('Conjunto em execução :')
-            print(conjunto)
-            estrategia1 = Greedy(self.numCaminhoes, conjunto)
-            estrategia1.distribuir_rotas_menor()
-            estrategia1.exibir_distribuicao('menor')
-        fim = time.time()  # Tempo final de execução de cada tamanho
-        tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
-        self.tempoDeExecucaoAlgoritmoGulosoEstrategia1.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+        while quantRotas <= totalRotasExecusao:
+            conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quantRotas, self.tamanho_conjunto, self.dispersao)
+            inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+            for conjunto in conjunto_teste:
+                estrategia1 = Greedy(self.numCaminhoes, conjunto)
+                estrategia1.distribuir_rotas_menor()
+                estrategia1.exibir_distribuicao('menor')
+            fim = time.time()  # Tempo final de execução de cada tamanho
+            tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+            self.tempoDeExecucaoAlgoritmoGulosoEstrategia1.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+            mediaTempo = sum(self.tempoDeExecucaoAlgoritmoGulosoEstrategia1) / len(self.tempoDeExecucaoAlgoritmoGulosoEstrategia1)
+            quantRotas+=1
+
+        return mediaTempo, totalRotasExecusao
 
 
-    def gulosoEstrategia2(self,conjunto_teste):
-        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
-        for conjunto in conjunto_teste:
-            print('------------------------')
-            print('Conjunto em execução :')
-            print(conjunto)
-            estrategia2 = Greedy(self.numCaminhoes, conjunto)
-            estrategia2.distribuir_rotas_agrupamento()
-            estrategia2.exibir_distribuicao('agrupamento')
-        fim = time.time()  # Tempo final de execução de cada tamanho
-        tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
-        self.tempoDeExecucaoAlgoritmoGulosoEstrategia2.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+
+    def execusaoGulosoEstrategia2(self,quantRotas):
+        totalRotasExecusao = quantRotas * 10
+        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de
+        while quantRotas <= totalRotasExecusao:
+            conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quantRotas, self.tamanho_conjunto, self.dispersao)
+            inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+            for conjunto in conjunto_teste:
+                estrategia2 = Greedy(self.numCaminhoes, conjunto)
+                estrategia2.distribuir_rotas_agrupamento()
+                estrategia2.exibir_distribuicao('agrupamento')
+            fim = time.time()  # Tempo final de execução de cada tamanho
+            tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+            self.tempoDeExecucaoAlgoritmoGulosoEstrategia2.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+            mediaTempo = sum(self.tempoDeExecucaoAlgoritmoGulosoEstrategia2) / len(
+                self.tempoDeExecucaoAlgoritmoGulosoEstrategia2)
+            quantRotas += 1
+
+        return mediaTempo, totalRotasExecusao
 
 
-    def execucaoDivisaoConquista(self,conjunto_teste):
-        inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
-        for conjunto in conjunto_teste:
-            print('------------------------')
-            print('Conjunto em execução :')
-            print(conjunto)
-            divisaoConquista = MergeSort(conjunto, self.numCaminhoes)
-            divisaoConquista.distribuir_quilometragem()
-            divisaoConquista.imprimir_distribuicao()
-        fim = time.time()  # Tempo final de execução de cada tamanho
-        tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
-        self.tempoDeExecucaoAlgoritmoDivisaoConquista.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+    def execusaoDivisaoConquista(self,quantRotasBacktracking):
+        quantRotas = 6
+        while quantRotas != quantRotasBacktracking:
+            conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quantRotas, self.tamanho_conjunto, self.dispersao)
+            inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+            for conjunto in conjunto_teste:
+                print('------------------------')
+                print('Conjunto em execução :')
+                print(conjunto)
+                divisaoConquista = MergeSort(conjunto, self.numCaminhoes)
+                divisaoConquista.distribuir_quilometragem()
+                divisaoConquista.imprimir_distribuicao()
+            fim = time.time()  # Tempo final de execução de cada tamanho
+            tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+            self.tempoDeExecucaoAlgoritmoDivisaoConquista.append(tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+            mediaTempo = sum(self.tempoDeExecucaoAlgoritmoDivisaoConquista)/len(self.tempoDeExecucaoAlgoritmoDivisaoConquista)
+            quantRotas+=1
+            print(quantRotas)
+        return mediaTempo, quantRotas
 
-    def executar_backtracking(self):
+    def execusaoBacktracking(self):
         def handler(signum, frame):
             raise TimeoutError("Tempo máximo de execução atingido")
 
@@ -81,19 +85,21 @@ class ExecucaoAlgoritmos:
         signal.alarm(self.tempo_maximo)
 
         try:
-            quant_rotas = 6
+            quantRotas = 6
             while True:
-                print('-------------------')
-                print('Quantidade de rotas :', quant_rotas)
-                conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quant_rotas, self.tamanho_conjunto,self.dispersao)
-                print('-----------------------')
-                print('Conjunto de teste gerado:')
-                print(conjunto_teste)
-                self.backtrack(conjunto_teste)
-                #self.gulosoEstrategia1(conjunto_teste)
-                #self.gulosoEstrategia2(conjunto_teste)
-                self.execucaoDivisaoConquista(conjunto_teste)
-                quant_rotas += 1  # Incrementa a quantidade de rotas
+                conjunto_teste = GeradorDeProblemas.geracao_de_rotas(quantRotas, self.tamanho_conjunto, self.dispersao)
+                inicio_execucao = time.time()  # Tempo de início para calcular o tempo de execução
+                for conjunto in conjunto_teste:
+                    bactrack = Backtrack(conjunto, self.numCaminhoes)
+                    bactrack.resolver()
+                    melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
+                fim = time.time()  # Tempo final de execução
+                tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
+                self.tempoDeExecucaoConjuntoBacktracking.append(
+                    tempo_conjunto)  # Adiciona em lista os tempos de cada tamanho
+                mediaTempo = sum(self.tempoDeExecucaoConjuntoBacktracking) / len(self.tempoDeExecucaoConjuntoBacktracking)
+                quantRotas += 1  # Incrementa a quantidade de rotas
+
 
         except TimeoutError as te:
             print(te)
@@ -101,6 +107,24 @@ class ExecucaoAlgoritmos:
         finally:
             signal.alarm(0)  # Reset do temporizador após a conclusão ou exceção
 
+        return mediaTempo, quantRotas
+
 if __name__ == "__main__":
     execucao = ExecucaoAlgoritmos()
-    execucao.executar_backtracking()
+    mediaTempoBacktacking, quantRotasBacktracking = execucao.execusaoBacktracking()
+    print('Média de execução Backtracking : ', mediaTempoBacktacking)
+    print('Quantidade de rotas Backtracking :', quantRotasBacktracking)
+
+    mediaTempoGulosoEstrategia1, quantRotaGulosoEstrategia1 = execucao.execusaoGulosoEstrategia1(quantRotasBacktracking)
+    print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
+    print('Quantidade de rotas Guloso Estratégia 1 :', quantRotaGulosoEstrategia1)
+
+    mediaTempoGulosoEstrategia2, quantRotasGulosoEstrategia2 = execucao.execusaoGulosoEstrategia2(quantRotasBacktracking)
+    print('Média de execução Guloso Estratégia 2 : ', mediaTempoGulosoEstrategia2)
+    print('Quantidade de rotas Guloso Estratégia 2 :', quantRotasGulosoEstrategia2)
+
+    mediaTempoDivisaoConquista, quantRotasDivisaoConquista = execucao.execusaoDivisaoConquista(quantRotasBacktracking)
+    print('Média de execução Guloso Estratégia 2 : ', mediaTempoDivisaoConquista)
+    print('Quantidade de rotas Guloso Estratégia 2 :', quantRotasDivisaoConquista)
+
+
