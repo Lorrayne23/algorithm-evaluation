@@ -23,7 +23,7 @@ def distribuir_rotas(rotas, num_caminhoes):
         total_kms = sum(caminhao)
         print(f'Caminhão {idx + 1}: rotas {", ".join(map(str, caminhao))} - total {total_kms}km')
 
-# Exemplo de uso
-num_caminhoes = 5
+# Execução local
+'''num_caminhoes = 5
 rotas = [35, 34, 33, 23, 21, 32, 35, 19, 26, 42]
-distribuir_rotas(rotas, num_caminhoes)
+distribuir_rotas(rotas, num_caminhoes)'''
