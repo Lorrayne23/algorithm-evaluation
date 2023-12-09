@@ -34,6 +34,7 @@ class ExecucaoAlgoritmos:
                     bactrack = Backtrack(conjunto, self.numCaminhoes)
                     bactrack.resolver()
                     melhor_distribuicao_backtrack = bactrack.obter_melhor_distribuicao()
+                    imprimir_distribuicao = bactrack.imprimir_melhor_distribuicao()
                 fim = time.time()  # Tempo final de execução
                 tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
                 self.tempoDeExecucaoBacktracking.append(tempo_conjunto)  # Adiciona em lista os tempos
@@ -59,7 +60,7 @@ class ExecucaoAlgoritmos:
             for conjunto in conjunto_teste:
                 estrategia1 = Greedy(self.numCaminhoes, conjunto)
                 estrategia1.distribuir_rotas_menor()
-                #estrategia1.exibir_distribuicao('menor')
+                estrategia1.exibir_distribuicao('menor')
             fim = time.time()  # Tempo final de execução de cada tamanho
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
             self.tempoDeExecucaoGulosoEstrategia1.append(tempo_conjunto)  # Adiciona em lista de tempos
@@ -79,7 +80,7 @@ class ExecucaoAlgoritmos:
             for conjunto in conjunto_teste:
                 estrategia2 = Greedy(self.numCaminhoes, conjunto)
                 estrategia2.distribuir_rotas_agrupamento()
-                #estrategia2.exibir_distribuicao('agrupamento')
+                estrategia2.exibir_distribuicao('agrupamento')
             fim = time.time()  # Tempo final de execução
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
             self.tempoDeExecucaoGulosoEstrategia2.append(tempo_conjunto)  # Adiciona em lista os tempos
@@ -101,7 +102,7 @@ class ExecucaoAlgoritmos:
                 print(conjunto)
                 divisaoConquista = MergeSort(conjunto, self.numCaminhoes)
                 divisaoConquista.distribuir_quilometragem()
-                #divisaoConquista.imprimir_distribuicao()
+                divisaoConquista.imprimir_distribuicao()
             fim = time.time()  # Tempo final de execução de cada tamanho
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
             self.tempoDeExecucaoDivisaoConquista.append(tempo_conjunto)  # Adiciona em lista os tempos
@@ -132,7 +133,7 @@ if __name__ == "__main__":
     print('Média de execução Backtracking : ', mediaTempoBacktacking)
     print('Quantidade de rotas Backtracking :', quantRotasBacktracking)
 
-    mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
+    '''mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
     print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
     print('Quantidade de rotas Guloso Estratégia 1 :', quantRotasGulosoEstrategia1)
 
@@ -142,10 +143,9 @@ if __name__ == "__main__":
 
     mediaTempoDivisaoConquista, quantRotasDivisaoConquista = execucao.execucaoDivisaoConquista(quantRotasBacktracking)
     print('Média de execução Divisião por Conquista : ', mediaTempoDivisaoConquista)
-    print('Quantidade de rotas Divisão por Conquista :', quantRotasDivisaoConquista)
+    print('Quantidade de rotas Divisão por Conquista :', quantRotasDivisaoConquista)'''
 
     mediaTempoProgramacaoDinamica, quantRotasProgramacaoDinamica = execucao.execucaoProgramacaoDinamica(quantRotasBacktracking)
     print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
     print('Quantidade de rotas Programação Dinâmica :', quantRotasProgramacaoDinamica)
-
 

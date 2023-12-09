@@ -9,27 +9,39 @@ class Greedy:
 
     def distribuir_rotas_menor(self):
         # Estratégia: Aloca cada rota ao caminhão com a menor quilometragem acumulada até o momento.
+        # Ordena as rotas em ordem decrescente de quilometragem
         rotas_ordenadas = sorted(enumerate(self.rotas), key=lambda x: x[1], reverse=True)
         for index, rota in rotas_ordenadas:
+            # Encontra o caminhão atual com a menor quilometragem acumulada
             caminhao_atual = min(range(self.caminhoes), key=lambda i: self.quilometragem_caminhoes_menor[i])
+            # Atualiza a quilometragem do caminhão atual com a quilometragem da rota
             self.quilometragem_caminhoes_menor[caminhao_atual] += rota
+            # Adiciona a rota ao caminhão atual na distribuição de rotas
             self.distribuicao_rotas_menor[caminhao_atual].append((index, rota))
 
     def distribuir_rotas_agrupamento(self):
         # Estratégia: Prioriza rotas próximas fisicamente para minimizar a quilometragem total percorrida.
         # As rotas são ordenadas por quilometragem, e cada rota é atribuída ao caminhão que minimiza a alteração na quilometragem acumulada,
         # considerando também o número de rotas já atribuídas.
+
+        # Ordena as rotas em ordem decrescente de quilometragem, mantendo os índices originais
         rotas_ordenadas = sorted(enumerate(self.rotas), key=lambda x: x[1], reverse=True)
         for index, rota in rotas_ordenadas:
+            # Obtém a lista de caminhões disponíveis e a ordena com base em uma chave composta
+            caminhoes_disponiveis = list(range(self.caminhoes))
             caminhoes_disponiveis = list(range(self.caminhoes))
             caminhoes_disponiveis.sort(key=lambda i: (
                 abs(self.quilometragem_caminhoes_agrupamento[i] + rota - sum(
                     x[1] for x in self.distribuicao_rotas_agrupamento[i])),
                 len(self.distribuicao_rotas_agrupamento[i])
             ))
-
+            # Escolhe o caminhão atual como o primeiro da lista ordenada de caminhões disponíveis
             caminhao_atual = caminhoes_disponiveis[0]
+
+            # Atualiza a quilometragem do caminhão atual com a quilometragem da rota
             self.quilometragem_caminhoes_agrupamento[caminhao_atual] += rota
+
+            # Adiciona a rota ao caminhão atual na distribuição de rotas
             self.distribuicao_rotas_agrupamento[caminhao_atual].append((index, rota))
 
     def exibir_distribuicao(self, modo):
@@ -41,22 +53,5 @@ class Greedy:
             print(f"Caminhão {i + 1}: rotas {rotas} - total {total_quilometragem}km")
 
 
-# Exemplo de uso
-'''caminhoes = 3
-rotas = [35, 34, 33, 23, 21, 32]
 
-# Cria uma nova instância da classe e realiza a distribuição usando a estratégia de menor quilometragem primeiro
-distribuicao_menor = Greedy(caminhoes, rotas)
-distribuicao_menor.distribuir_rotas_menor()
 
-# Exibe o resultado da distribuição usando a estratégia de menor quilometragem primeiro
-print("Distribuição usando a estratégia de menor quilometragem primeiro:")
-distribuicao_menor.exibir_distribuicao('menor')
-
-# Cria uma nova instância da classe e realiza a distribuição usando a estratégia de agrupamento
-distribuicao_agrupamento = Greedy(caminhoes, rotas)
-distribuicao_agrupamento.distribuir_rotas_agrupamento()
-
-# Exibe o resultado da distribuição usando a estratégia de agrupamento
-print("\nDistribuição usando a estratégia de agrupamento:")
-distribuicao_agrupamento.exibir_distribuicao('agrupamento')'''
