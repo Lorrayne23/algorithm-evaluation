@@ -133,7 +133,7 @@ if __name__ == "__main__":
     print('Média de execução Backtracking : ', mediaTempoBacktacking)
     print('Quantidade de rotas Backtracking :', quantRotasBacktracking)
 
-    '''mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
+    mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
     print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
     print('Quantidade de rotas Guloso Estratégia 1 :', quantRotasGulosoEstrategia1)
 
@@ -143,7 +143,7 @@ if __name__ == "__main__":
 
     mediaTempoDivisaoConquista, quantRotasDivisaoConquista = execucao.execucaoDivisaoConquista(quantRotasBacktracking)
     print('Média de execução Divisião por Conquista : ', mediaTempoDivisaoConquista)
-    print('Quantidade de rotas Divisão por Conquista :', quantRotasDivisaoConquista)'''
+    print('Quantidade de rotas Divisão por Conquista :', quantRotasDivisaoConquista)
 
     mediaTempoProgramacaoDinamica, quantRotasProgramacaoDinamica = execucao.execucaoProgramacaoDinamica(quantRotasBacktracking)
     print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
