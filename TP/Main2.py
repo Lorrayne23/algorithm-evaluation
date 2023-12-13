@@ -1,8 +1,8 @@
 import time
 from Backtracking import  Backtrack
 from ProgramacaoDinamica import distribuir_rotas
-from guloso2 import Greedy
-from divisao2 import DistribuicaoRotas
+from AlgoritmoGuloso import Greedy
+from DivisaoConquista import DistribuicaoRotas
 
 class ExecucaoAlgoritmos():
     def __init__(self,conjunto_rotas):
@@ -34,7 +34,7 @@ class ExecucaoAlgoritmos():
     def execucaoGulosoEstrategia1(self):
             inicio_execucao = time.time()
             estrategia1 = Greedy(self.numCaminhoes, conjunto_rotas)
-            estrategia1.distribuir_rotas_menor()
+            estrategia1.distribuir_rotas_menor_quilometragem()
             estrategia1.exibir_distribuicao('menor')
             fim = time.time()  # Tempo final de execução de cada tamanho
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
@@ -47,7 +47,7 @@ class ExecucaoAlgoritmos():
     def execucaoGulosoEstrategia2(self):
             inicio_execucao = time.time()
             estrategia2 = Greedy(self.numCaminhoes, conjunto_rotas)
-            estrategia2.distribuir_rotas_agrupamento()
+            estrategia2.distribuir_rotas_sequencial()
             estrategia2.exibir_distribuicao('agrupamento')
             fim = time.time()  # Tempo final de execução
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
@@ -77,22 +77,24 @@ class ExecucaoAlgoritmos():
             return mediaTempo
 
 if __name__ == "__main__":
-    conjunto_rotas = [40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28]
-    #conjunto_rotas =[32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27]
+    conjunto_rotas_1 = [40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28]
+    conjunto_rotas_2 =[32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27]
+    conjuntos_rotas  = [conjunto_rotas_1 , conjunto_rotas_2]
 
-    execucao = ExecucaoAlgoritmos(conjunto_rotas)
-    mediaTempoBacktacking= execucao.execucaoBacktracking()
-    print('Média de execução Backtracking : ', mediaTempoBacktacking)
+    for conjunto_rotas in  conjuntos_rotas :
+        execucao = ExecucaoAlgoritmos(conjunto_rotas)
+        mediaTempoBacktacking= execucao.execucaoBacktracking()
+        print('Média de execução Backtracking : ', mediaTempoBacktacking)
 
-    mediaTempoGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1()
-    print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
+        mediaTempoGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1()
+        print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
 
-    mediaTempoGulosoEstrategia2 = execucao.execucaoGulosoEstrategia2()
-    print('Média de execução Guloso Estratégia 2 : ', mediaTempoGulosoEstrategia2)
+        mediaTempoGulosoEstrategia2 = execucao.execucaoGulosoEstrategia2()
+        print('Média de execução Guloso Estratégia 2 : ', mediaTempoGulosoEstrategia2)
 
-    mediaTempoDivisaoConquista = execucao.execucaoDivisaoConquista()
-    print('Média de execução Divisião por Conquista : ', mediaTempoDivisaoConquista)
+        mediaTempoDivisaoConquista = execucao.execucaoDivisaoConquista()
+        print('Média de execução Divisião por Conquista : ', mediaTempoDivisaoConquista)
 
-    mediaTempoProgramacaoDinamica = execucao.execucaoProgramacaoDinamica()
-    print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
+        mediaTempoProgramacaoDinamica = execucao.execucaoProgramacaoDinamica()
+        print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
 

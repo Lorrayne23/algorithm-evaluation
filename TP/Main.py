@@ -1,12 +1,11 @@
 import time
 import signal
 from GeradorDeProblemas import GeradorDeProblemas
-from Backtracking import  Backtrack
-#from AlgoritmoGuloso import Greedy
-from guloso2 import Greedy
-from DivisaoConquista import MergeSort
-from divisao2 import DistribuicaoRotas
+from Backtracking import Backtrack
+from AlgoritmoGuloso import Greedy
+from DivisaoConquista import DistribuicaoRotas
 from ProgramacaoDinamica import distribuir_rotas
+from datetime import timedelta, datetime
 
 class ExecucaoAlgoritmos:
     def __init__(self):
@@ -40,7 +39,8 @@ class ExecucaoAlgoritmos:
                 fim = time.time()  # Tempo final de execução
                 tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
                 self.tempoDeExecucaoBacktracking.append(tempo_conjunto)  # Adiciona em lista os tempos
-                mediaTempo = sum(self.tempoDeExecucaoBacktracking) / len(self.tempoDeExecucaoBacktracking) # Calcula média
+                mediaTempo = sum(self.tempoDeExecucaoBacktracking) / len(
+                    self.tempoDeExecucaoBacktracking)  # Calcula média
                 quantRotas += 1  # Incrementa a quantidade de rotas
 
 
@@ -61,7 +61,7 @@ class ExecucaoAlgoritmos:
             inicio_execucao = time.time()
             for conjunto in conjunto_teste:
                 estrategia1 = Greedy(self.numCaminhoes, conjunto)
-                estrategia1.distribuir_rotas_menor()
+                estrategia1.distribuir_rotas_menor_quilometragem()
                 estrategia1.exibir_distribuicao('menor')
             fim = time.time()  # Tempo final de execução de cada tamanho
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
@@ -81,7 +81,7 @@ class ExecucaoAlgoritmos:
             inicio_execucao = time.time()
             for conjunto in conjunto_teste:
                 estrategia2 = Greedy(self.numCaminhoes, conjunto)
-                estrategia2.distribuir_rotas_agrupamento()
+                estrategia2.distribuir_rotas_sequencial()
                 estrategia2.exibir_distribuicao('agrupamento')
             fim = time.time()  # Tempo final de execução
             tempo_conjunto = (fim - inicio_execucao)  # Calcula o tempo de execução do conjunto
@@ -131,23 +131,24 @@ class ExecucaoAlgoritmos:
 
 if __name__ == "__main__":
     execucao = ExecucaoAlgoritmos()
+
     mediaTempoBacktacking, quantRotasBacktracking = execucao.execucaoBacktracking()
     print('Média de execução Backtracking : ', mediaTempoBacktacking)
     print('Quantidade de rotas Backtracking :', quantRotasBacktracking)
 
     '''mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
     print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
-    print('Quantidade de rotas Guloso Estratégia 1 :', quantRotasGulosoEstrategia1)
+    print('Quantidade de rotas Guloso Estratégia 1 :', quantRotasGulosoEstrategia1)'''
 
-    mediaTempoGulosoEstrategia2, quantRotasGulosoEstrategia2 = execucao.execucaoGulosoEstrategia2(quantRotasBacktracking)
+    '''mediaTempoGulosoEstrategia2, quantRotasGulosoEstrategia2 = execucao.execucaoGulosoEstrategia2(quantRotasBacktracking)
     print('Média de execução Guloso Estratégia 2 : ', mediaTempoGulosoEstrategia2)
-    print('Quantidade de rotas Guloso Estratégia 2 :', quantRotasGulosoEstrategia2)
+    print('Quantidade de rotas Guloso Estratégia 2 :', quantRotasGulosoEstrategia2)'''
 
     mediaTempoDivisaoConquista, quantRotasDivisaoConquista = execucao.execucaoDivisaoConquista(quantRotasBacktracking)
     print('Média de execução Divisião por Conquista : ', mediaTempoDivisaoConquista)
     print('Quantidade de rotas Divisão por Conquista :', quantRotasDivisaoConquista)
 
-    mediaTempoProgramacaoDinamica, quantRotasProgramacaoDinamica = execucao.execucaoProgramacaoDinamica(quantRotasBacktracking)
+    '''mediaTempoProgramacaoDinamica, quantRotasProgramacaoDinamica = execucao.execucaoProgramacaoDinamica(quantRotasBacktracking)
     print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
     print('Quantidade de rotas Programação Dinâmica :', quantRotasProgramacaoDinamica)'''
 
