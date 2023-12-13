@@ -1,10 +1,8 @@
 import time
-import signal
-from GeradorDeProblemas import GeradorDeProblemas
 from Backtracking import  Backtrack
-from AlgoritmoGuloso import Greedy
-from DivisaoConquista import MergeSort
 from ProgramacaoDinamica import distribuir_rotas
+from guloso2 import Greedy
+from divisao2 import DistribuicaoRotas
 
 class ExecucaoAlgoritmos():
     def __init__(self,conjunto_rotas):
@@ -60,7 +58,7 @@ class ExecucaoAlgoritmos():
 
     def execucaoDivisaoConquista(self):
             inicio_execucao = time.time()
-            divisaoConquista = MergeSort(conjunto_rotas, self.numCaminhoes)
+            divisaoConquista = DistribuicaoRotas(conjunto_rotas, self.numCaminhoes)
             divisaoConquista.distribuir_quilometragem()
             divisaoConquista.imprimir_distribuicao()
             fim = time.time()  # Tempo final de execução de cada tamanho
@@ -78,12 +76,9 @@ class ExecucaoAlgoritmos():
             mediaTempo = sum(self.tempoDeExecucaoProgamacaoDinamica) / len(self.tempoDeExecucaoProgamacaoDinamica)
             return mediaTempo
 
-
-
-
 if __name__ == "__main__":
-    #conjunto_rotas = [40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28]
-    conjunto_rotas =[32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27]
+    conjunto_rotas = [40,36,38,29,32,28,31,35,31,30,32,30,29,39,35,38,39,35,32,38,32,33,29,33,29,39,28]
+    #conjunto_rotas =[32,51,32,43,42,30,42,51,43,51,29,25,27,32,29,55,43,29,32,44,55,29,53,30,24,27]
 
     execucao = ExecucaoAlgoritmos(conjunto_rotas)
     mediaTempoBacktacking= execucao.execucaoBacktracking()

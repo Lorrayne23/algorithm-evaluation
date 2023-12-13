@@ -2,8 +2,10 @@ import time
 import signal
 from GeradorDeProblemas import GeradorDeProblemas
 from Backtracking import  Backtrack
-from AlgoritmoGuloso import Greedy
+#from AlgoritmoGuloso import Greedy
+from guloso2 import Greedy
 from DivisaoConquista import MergeSort
+from divisao2 import DistribuicaoRotas
 from ProgramacaoDinamica import distribuir_rotas
 
 class ExecucaoAlgoritmos:
@@ -100,7 +102,7 @@ class ExecucaoAlgoritmos:
                 print('------------------------')
                 print('Conjunto em execução :')
                 print(conjunto)
-                divisaoConquista = MergeSort(conjunto, self.numCaminhoes)
+                divisaoConquista = DistribuicaoRotas(conjunto, self.numCaminhoes)
                 divisaoConquista.distribuir_quilometragem()
                 divisaoConquista.imprimir_distribuicao()
             fim = time.time()  # Tempo final de execução de cada tamanho
@@ -133,7 +135,7 @@ if __name__ == "__main__":
     print('Média de execução Backtracking : ', mediaTempoBacktacking)
     print('Quantidade de rotas Backtracking :', quantRotasBacktracking)
 
-    mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
+    '''mediaTempoGulosoEstrategia1, quantRotasGulosoEstrategia1 = execucao.execucaoGulosoEstrategia1(quantRotasBacktracking)
     print('Média de execução Guloso Estratégia 1 : ', mediaTempoGulosoEstrategia1)
     print('Quantidade de rotas Guloso Estratégia 1 :', quantRotasGulosoEstrategia1)
 
@@ -147,5 +149,5 @@ if __name__ == "__main__":
 
     mediaTempoProgramacaoDinamica, quantRotasProgramacaoDinamica = execucao.execucaoProgramacaoDinamica(quantRotasBacktracking)
     print('Média de execução Programação Dinâmica : ', mediaTempoProgramacaoDinamica)
-    print('Quantidade de rotas Programação Dinâmica :', quantRotasProgramacaoDinamica)
+    print('Quantidade de rotas Programação Dinâmica :', quantRotasProgramacaoDinamica)'''
 
